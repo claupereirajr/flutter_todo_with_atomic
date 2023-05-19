@@ -3,6 +3,9 @@ import 'package:rx_notifier/rx_notifier.dart';
 
 class TodoReducer extends RxReducer {
   TodoReducer() {
-    on(() => [addTodoAction.value], () {});
+    on(() => [addTodoAction.value], onCreateTodo);
+    on(() => [delTodoAction.value], onDeleteTodo);
   }
+  void onCreateTodo() {}
+  void onDeleteTodo() {}
 }

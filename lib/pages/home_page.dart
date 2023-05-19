@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_with_atomic/models/todo.dart';
 import 'package:flutter_todo_with_atomic/pages/index.dart';
 import 'package:flutter_todo_with_atomic/states.dart';
 import 'package:rx_notifier/rx_notifier.dart';
@@ -40,10 +41,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
             ),
             Expanded(
-                flex: 1,
-                child: ListView.builder(
-                    itemCount: 14,
-                    itemBuilder: (context, index) => _todoCard(context)))
+              flex: 1,
+              child: ListView.builder(
+                itemCount: todos.length,
+                itemBuilder: (context, index) => _todoCard(
+                  context,
+                  todos[index],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -51,16 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Card _todoCard(BuildContext context) {
+Card _todoCard(BuildContext context, Todo todo) {
   return Card(
     child: ListTile(
-        title: const Text(
-          'batata',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+        title: Text(
+          '${todo.id} ${todo.task}',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
         ),
-        subtitle: const Text(
-          'feijao',
-          style: TextStyle(fontSize: 14.0, color: Colors.black54),
+        subtitle: Text(
+          todo.desc,
+          style: const TextStyle(fontSize: 14.0, color: Colors.black54),
         ),
         trailing: SizedBox(
           width: 96.0,
@@ -72,7 +78,7 @@ Card _todoCard(BuildContext context) {
                 icon: const Icon(Icons.check),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: delTodoAction,
                 icon: const Icon(Icons.close),
               ),
             ],
